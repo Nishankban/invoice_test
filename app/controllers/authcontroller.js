@@ -8,7 +8,7 @@ app.post('/login/google', async (req, res) => {
     const { idToken } = req.body;
 
     try {
-        // Verify the authenticity of the Google sign-in credentials
+        console.log("data")// Verify the authenticity of the Google sign-in credentials
         const decodedToken = await admin.auth().verifyIdToken(idToken);
 
         // Retrieve the user's unique identifier (UID) and other necessary information
