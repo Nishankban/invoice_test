@@ -1,7 +1,8 @@
 const express = require('express');
 
 const app = express();
-
+app.use(express.json());
+app.use
 // const morgan = require('morgan');
 
 // const taskrouter = require('./routes/taskroutes');
