@@ -1,6 +1,6 @@
 const app = require('./app');
 
-import {admin} from "../Invoice_manager_backend/config/firebase";
+const  admin = require( "../Invoice_manager_backend/config/firebase");
 
 const connectDB = require('./config/database');
 
