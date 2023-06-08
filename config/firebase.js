@@ -1,1 +1,0 @@
-const firebase = require('firebase');

@@ -1,9 +1,7 @@
 const app = require('./app');
 
-// const admin = require('config/firebase');
 
 const connectDB = require('./config/database');
-const firebaseadmin = require('./auth/firebaseAuth');
 
 const port = process.env.PORT || 3000;
 
@@ -17,7 +15,6 @@ admin.initializeApp({
     // databaseURL: 'https://your-project-id.firebaseio.com',
 });
 
-// Export the initialized Firebase objects
 
 connectDB()
     .then(() => console.log('Database connected successfully'))
@@ -25,61 +22,11 @@ connectDB()
 
 app.get('/', (req, res) => {
 
-    res.send("Data first");
+    res.send("Testing on this server");
 
 
 });
 
-app.post('/login/google', async (req, res) => {
-    const { idToken } = req.body;
-
-    try {
-        console.log("data")// Verify the authenticity of the Google sign-in credentials
-        // const decodedToken = await admin.auth().verifyIdToken(idToken);
-
-        // Retrieve the user's unique identifier (UID) and other necessary information
-
-      const decodedToken = await firebaseadmin.verifyGoogleToken(idToken);
-        const uid = decodedToken.uid;
-        const email = decodedToken.email;
-        // Add other required user information as needed
-
-        // Create a custom token for the user
-
-        // Return the custom token as the response
-
-        console.log(uid,email);
-        res.json({ token: uid });
-    } catch (error) {
-        console.error('Google sign-in error:', error);
-        res.status(500).json({ error: 'Google sign-in failed' });
-    }
-});
-app.post('/login/facebook', async (req, res) => {
-    const { idToken } = req.body;
-
-    try {
-        console.log("data")// Verify the authenticity of the Google sign-in credentials
-        // const decodedToken = await admin.auth().verifyIdToken(idToken);
-
-        // Retrieve the user's unique identifier (UID) and other necessary information
-
-        const decodedToken = await firebaseadmin.verifyFacebookToken(idToken);
-        const uid = decodedToken.uid;
-        const email = decodedToken.email;
-        // Add other required user information as needed
-
-        // Create a custom token for the user
-
-        // Return the custom token as the response
-
-        console.log(uid,email);
-        res.json({ token: uid });
-    } catch (error) {
-        console.error('Google sign-in error:', error);
-        res.status(500).json({ error: 'Google sign-in failed' });
-    }
-});
 
 
 

@@ -3,7 +3,12 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+const authrouter = require('./app/routes/authroutes');
 
+
+
+
+app.use('/api/v1',authrouter);
 
 
 // const morgan = require('morgan');
