@@ -9,7 +9,6 @@ const port = process.env.PORT || 3000;
 
 const admin = require("firebase-admin");
 const serviceAccount = require('./config/serviceAccountKey.json');
-const firebase = require("./config/firebase");
 
 
 // Initialize the admin app
