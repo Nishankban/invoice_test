@@ -1,6 +1,6 @@
 const User = require('../models/User');
-const genverifypass = require('app/helpers/password');
-const myjwt = require('app/helpers/jwt');
+const genverifypass = require('../helpers/password');
+const myjwt = require('../helpers/jwt');
 const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
 
