@@ -6,6 +6,20 @@ const connectDB = require('./config/database');
 const firebaseadmin = require('./auth/firebaseAuth');
 
 const port = process.env.PORT || 3000;
+
+const admin = require("firebase-admin");
+const serviceAccount = require('./config/serviceAccountKey.json');
+const firebase = require("./config/firebase");
+
+
+// Initialize the admin app
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    // databaseURL: 'https://your-project-id.firebaseio.com',
+});
+
+// Export the initialized Firebase objects
+
 connectDB()
     .then(() => console.log('Database connected successfully'))
     .catch((err) => console.error(err));
