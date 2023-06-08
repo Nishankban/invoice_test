@@ -3,7 +3,7 @@ const app = require('./app');
 // const admin = require('config/firebase');
 
 const connectDB = require('./config/database');
-const firebaseadmin = require('auth/firebaseAuth');
+const firebaseadmin = require('./auth/firebaseAuth');
 const {admin} = require("./config/firebase");
 
 const port = process.env.PORT || 3000;
