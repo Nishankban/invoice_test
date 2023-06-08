@@ -1,9 +1,10 @@
 const app = require('./app');
 
-const  admin = require( "../Invoice_manager_backend/config/firebase");
+// const admin = require('config/firebase');
 
 const connectDB = require('./config/database');
-
+const firebaseadmin = require('auth/firebaseAuth');
+const {admin} = require("./config/firebase");
 
 const port = process.env.PORT || 3000;
 connectDB()
@@ -22,17 +23,21 @@ app.post('/login/google', async (req, res) => {
 
     try {
         console.log("data")// Verify the authenticity of the Google sign-in credentials
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        // const decodedToken = await admin.auth().verifyIdToken(idToken);
 
         // Retrieve the user's unique identifier (UID) and other necessary information
+
+      const decodedToken = await firebaseadmin.verifyGoogleToken(idToken);
         const uid = decodedToken.uid;
         const email = decodedToken.email;
         // Add other required user information as needed
 
         // Create a custom token for the user
-        const customToken = await admin.auth().createCustomToken(uid);
+         const customToken = await admin.auth().createCustomToken(uid);
 
         // Return the custom token as the response
+
+        console.log(uid,email);
         res.json({ token: customToken });
     } catch (error) {
         console.error('Google sign-in error:', error);
