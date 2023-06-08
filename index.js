@@ -4,7 +4,6 @@ const app = require('./app');
 
 const connectDB = require('./config/database');
 const firebaseadmin = require('./auth/firebaseAuth');
-const {admin} = require("./config/firebase");
 
 const port = process.env.PORT || 3000;
 connectDB()
@@ -33,12 +32,11 @@ app.post('/login/google', async (req, res) => {
         // Add other required user information as needed
 
         // Create a custom token for the user
-         const customToken = await admin.auth().createCustomToken(uid);
 
         // Return the custom token as the response
 
         console.log(uid,email);
-        res.json({ token: customToken });
+        res.json({ token: uid });
     } catch (error) {
         console.error('Google sign-in error:', error);
         res.status(500).json({ error: 'Google sign-in failed' });
