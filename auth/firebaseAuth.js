@@ -14,12 +14,10 @@ async function verifyGoogleToken(idToken) {
     }
 }
 
-async function verifyFacebookToken(accessToken) {
+async function verifyFacebookToken(idToken) {
     try {
-        const credential = admin.auth.FacebookAuthProvider.credential(accessToken);
-        const result = await admin.auth().signInWithCredential(credential);
-        const { uid, email } = result.user;
-
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        const { uid, email } = decodedToken;
 
         return { uid, email };
     } catch (error) {
