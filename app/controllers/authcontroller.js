@@ -55,7 +55,8 @@ const signInWithEmail = async (req, res) => {
         }
 
         // Generate JWT token
-
+        user.lastSignInAt = new Date();
+        await user.save();
 
         const token = myjwt.generateToken({userId: user._id}, process.env.JWT_SECRET_KEY)
         // const token = jwt.sign({ userId: user._id }, 'your-secret-key');
@@ -104,6 +105,8 @@ const signInWithGoogle = async (req, res) => {
         }
 
         // Generate JWT token
+        user.lastSignInAt = new Date();
+        await user.save();
 
         const token = myjwt.generateToken({userId: user._id}, process.env.JWT_SECRET_KEY)
 
