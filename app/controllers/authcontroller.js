@@ -105,7 +105,7 @@ const signUpWithGoogle = async (req, res) => {
 // Sign in with Google
 const signInWithGoogle = async (req, res) => {
     try {
-        const { googleId } = req.body;
+        const { googleId ,fcm} = req.body;
 
         // Check if user exists
         const user = await User.findOne({ googleId });
@@ -114,6 +114,7 @@ const signInWithGoogle = async (req, res) => {
         }
 
         // Generate JWT token
+        user.fcm = fcm
         user.lastSignInAt = new Date();
         await user.save();
 
