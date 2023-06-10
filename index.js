@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
     res.send("Testing on this server");
 
-
+    console.log("data")
 });
 
 

@@ -13,11 +13,33 @@ const signUpWithEmail = async (req, res) => {
         // Check if user already exists
         const existingUser = await User.findOne({email});
         if (existingUser) {
-            return res.status(400).json({error: 'User already exists'});
-        }
+             /*   if(existingUser.googleId!=null || existingUser.password == ""){
+
+                console.log("Exisiting user linking");
+            }else{
+                return res.status(400).json({error: 'User already exists'});
+
+            }*/
+
+            console.log(existingUser.password)
+
+            if (existingUser.googleId && existingUser.password==null) {
+                const hashpwd = await genverifypass.generatePasswordHash(password); // Await the password hash generation
+                // Update existing user
+                await User.updateOne({ email }, { $set: { password: hashpwd } });
+                return res.json({ message: 'User created successfully' });
+            } else{
+                return res.status(400).json({error: 'User already exists'});
+
+            }
+
+
+
+
+        }else{
 
         // Hash the password
-        const hashpwd = genverifypass.generatePasswordHash(password);
+            const hashpwd = await genverifypass.generatePasswordHash(password); // Await the password hash generation
 
 
         // Create new user
@@ -28,6 +50,7 @@ const signUpWithEmail = async (req, res) => {
         await newUser.save();
 
         res.json({message: 'User created successfully'});
+        }
     } catch (error) {
         console.log('Error signing up with email:', error);
         res.status(500).json({error: 'Failed to sign up with email'});
@@ -74,6 +97,9 @@ const signUpWithGoogle = async (req, res) => {
         const {email, googleId} = req.body;
 
         // Check if user already exists
+
+
+        console.log()
         const existingUser = await User.findOne({email});
         if (existingUser) {
             return res.status(400).json({error: 'User already exists'});
