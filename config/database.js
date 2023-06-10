@@ -7,7 +7,6 @@ const uri = `mongodb+srv://myadmin:admin@studentcluster.nxhqg6z.mongodb.net/?ret
 
 function connectDB() {
 
-    console.log("data")
 
     return mongoose.connect(uri, {
         useNewUrlParser: true,
