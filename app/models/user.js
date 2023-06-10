@@ -8,6 +8,9 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    fcm:{
+      type:String
+    },
     updatedAt: {
         type: Date,
         default: Date.now,

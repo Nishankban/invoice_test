@@ -6,7 +6,7 @@ dotenv.config({path: './config.env'});
 // Sign up with email
 const signUpWithEmail = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password ,fcm} = req.body;
 
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -14,7 +14,7 @@ const signUpWithEmail = async (req, res) => {
             if (existingUser.googleId && existingUser.password == null) {
                 const hashpwd = await genverifypass.generatePasswordHash(password);
                 // Update existing user
-                await User.updateOne({ email }, { $set: { password: hashpwd } });
+                await User.updateOne({ email }, { $set: { password: hashpwd ,fcm:fcm} });
                 const token = myjwt.generateToken({ userId: existingUser._id }, process.env.JWT_SECRET_KEY);
                 return res.json({ user: existingUser, token }); // Send user and token in the response
             } else {
@@ -29,6 +29,7 @@ const signUpWithEmail = async (req, res) => {
         const newUser = new User({
             email,
             password: hashpwd,
+            fcm:fcm
         });
         await newUser.save();
 
@@ -43,7 +44,7 @@ const signUpWithEmail = async (req, res) => {
 // Sign in with email
 const signInWithEmail = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password ,fcm} = req.body;
 
         // Check if user exists
         const user = await User.findOne({ email });
@@ -59,7 +60,7 @@ const signInWithEmail = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).json({ error: 'Invalid password' });
         }
-
+        user.fcm=fcm;
         // Generate JWT token
         user.lastSignInAt = new Date();
         await user.save();
@@ -75,7 +76,7 @@ const signInWithEmail = async (req, res) => {
 // Sign up with Google
 const signUpWithGoogle = async (req, res) => {
     try {
-        const { email, googleId } = req.body;
+        const { email, googleId,fcm } = req.body;
 
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -83,10 +84,13 @@ const signUpWithGoogle = async (req, res) => {
             return res.status(400).json({ error: 'User already exists' });
         }
 
+
+
         // Create new user
         const newUser = new User({
             email,
             googleId,
+            fcm
         });
         await newUser.save();
 
