@@ -148,7 +148,7 @@ const forgotPassword = async (req, res) => {
         user.fcm = fcm;
         await user.save();
 
-        const resetPasswordLink = `${process.env.RESET_PASSWORD_URL}/${token}`;
+        const resetPasswordLink = `https://invoicetest-m7na.onrender.com/${token}`;
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
