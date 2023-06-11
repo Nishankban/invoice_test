@@ -156,7 +156,7 @@ const forgotPassword = async (req, res) => {
         user.fcm = fcm;
         await user.save();
 
-        const resetPasswordLink = `https://invoicetest-m7na.onrender.com/${token}`;
+        const resetPasswordLink = `https://invoicetest-m7na.onrender.com/verify/${token}`;
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -207,6 +207,7 @@ const verifyForgetPassword = async (req, res) => {
                 title: 'Password Reset',
                 body: `${token}`,
             },
+
         };
 
 
@@ -217,8 +218,6 @@ const verifyForgetPassword = async (req, res) => {
 
 
         getMessaging().send(message).then((response) => {
-
-
             console.log('Successfully sent message:', response);
 
         }).catch((error) => {

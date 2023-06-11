@@ -14,7 +14,7 @@ router.route("/signup/google").post(signUpWithGoogle);
 
 
 router.route("/forgotpassword").post(forgotPassword);
-router.route("/verifyforgotpassword").get(verifyForgetPassword);
+router.route("/verify").get(verifyForgetPassword);
 router.route("/resetpassword").post(resetPassword);
 
 
