@@ -14,9 +14,9 @@ router.route("/signup/google").post(signUpWithGoogle);
 
 
 router.route("/forgotpassword").post(forgotPassword);
-/*  Shifted this api to main as we cant use here in the api router section
+/*  Shifted this api to main as we cant use here in the api router section */
 router.route("/verify").get(verifyForgetPassword);
-*/
+
 router.route("/resetpassword").post(resetPassword);
 
 
