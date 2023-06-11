@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema({
     lastSignInAt: {
         type: Date,
     },
+    resetPasswordToken: String, // Add reset password token field
+    resetPasswordExpires: Date, //
 });
 
 module.exports = mongoose.model('User', userSchema);

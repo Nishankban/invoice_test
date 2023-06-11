@@ -2,7 +2,12 @@ const User = require('../models/user');
 const genverifypass = require('../helpers/password');
 const myjwt = require('../helpers/jwt');
 const dotenv = require('dotenv');
+const { admin } = require('../../app');
+const nodemailer = require('nodemailer');
 dotenv.config({path: './config.env'});
+
+
+
 // Sign up with email
 const signUpWithEmail = async (req, res) => {
     try {
@@ -126,9 +131,121 @@ const signInWithGoogle = async (req, res) => {
     }
 };
 
+const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        // Check if user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: 'User not found' });
+        }
+
+        // Generate reset token
+        const { token, expires } = myjwt.generateResetToken();
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = expires;
+        await user.save();
+
+        const resetPasswordLink = `${process.env.RESET_PASSWORD_URL}/${token}`;
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'bansalnishank4@gmail.com',
+                pass: 'tddwprtfvcgyftyw',
+            },
+        });
+
+        const mailOptions = {
+            from: 'bansalnishank4@gmail.com',
+            to: email,
+            subject: 'Reset Password',
+            text: `Please confirm on the below link to confirm your reset password \n ${resetPasswordLink} request after confirming the request we suggest you to move back to app to reset password`,
+        };
+
+        // Send the email
+        await transporter.sendMail(mailOptions);
+
+
+        res.json({ message: 'Password reset instructions sent to email' });
+    } catch (error) {
+        console.log('Error in forgot password:', error);
+        res.status(500).json({ error: 'Failed to send password reset instructions' });
+    }
+};
+
+
+
+const verifyforgetPassword = async (req,res) =>{
+    try{
+        const token = req.params
+        const user = await User.findOne({
+            resetPasswordToken:token,
+            resetPasswordExpires:{$gt:Date.now()}
+        });
+
+        if(!user){
+            return res.status(400).json({error:'Invalid or token got expired.'})
+        }
+        //get fcm data from user model and send the token to particular user for reset passowrd
+
+        const message = {
+            token: user.fcm, // Assuming the user's FCM token is stored in the 'fcm' field of the user model
+            notification: {
+                title: 'Password Reset',
+                body: `${token}`,
+            },
+        };
+
+        await admin.messaging().send(message);
+
+
+        res.json({ message: 'Password reset confirmation successful' });
+
+
+    }catch (error) {
+        res.status(500).json({ error: 'Failed to verify reset password confirmation' });
+    }
+}
+const resetPassword = async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { password } = req.body;
+
+        // Check if token is valid and not expired
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() },
+        });
+        if (!user) {
+            return res.status(400).json({ error: 'Invalid or expired reset token' });
+        }
+
+        // Generate new password hash
+        const hashpwd = await genverifypass.generatePasswordHash(password);
+
+        // Update user's password
+        user.password = hashpwd;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+
+        res.json({ message: 'Password reset successfully' });
+    } catch (error) {
+        console.log('Error in reset password:', error);
+        res.status(500).json({ error: 'Failed to reset password' });
+    }
+};
+
+
+
 module.exports = {
     signUpWithEmail,
     signInWithEmail,
     signUpWithGoogle,
     signInWithGoogle,
+    forgotPassword,
+    resetPassword,
+    verifyforgetPassword
 };

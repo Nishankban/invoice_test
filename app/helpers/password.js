@@ -13,6 +13,7 @@ const comparePasswords = async (password, hash) => {
     return isPasswordValid;
 };
 
+
 module.exports = {
     generatePasswordHash,
     comparePasswords,
