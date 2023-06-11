@@ -8,13 +8,24 @@
             background-color: #f7f7f7;
         }
         .container {
-            max-width: 400px;
+            max-width: 450px;
             margin: 0 auto;
             padding: 20px;
+            text-align: center;
             background-color: #fff;
             border-radius: 4px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            /* Animation */
+            opacity: 0;
+            animation: fade-in 1s ease-in-out forwards;
         }
+
+        @keyframes fade-in {
+            0% { opacity: 0; }
+            50% {opacity: .5;}
+            100% { opacity: 1; }
+        }
+
         h1 {
             color: #333;
         }
@@ -25,8 +36,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>Password Reset Success</h1>
-    <p>Your password has been successfully reset.</p>
+    <h1>Reset Password Confirmation Success</h1>
+    <p>Your password request has been successfully confirmed. Please revert back to the app to change the password.</p>
 </div>
 </body>
 </html>
