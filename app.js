@@ -15,7 +15,9 @@ app.use(function(req, res, next) {
 
 app.use('/api/v1',authrouter);
 
-
+app.get('/reset-success', (req, res) => {
+    res.sendFile(__dirname + 'views/reset-success.html');
+});
 // const morgan = require('morgan');
 
 // const taskrouter = require('./routes/taskroutes');

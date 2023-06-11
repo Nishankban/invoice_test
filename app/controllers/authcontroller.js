@@ -230,9 +230,12 @@ const verifyForgetPassword = async (req, res) => {
         console.log(admin.apps);
 */
         /*await ..send(message);*/
+        res.redirect('/reset-success');
 
 
+/*
         res.json({message: 'Password reset confirmation successful'});
+*/
 
 
     } catch (error) {
