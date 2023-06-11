@@ -133,7 +133,7 @@ const signInWithGoogle = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
     try {
-        const { email } = req.body;
+        const { email ,fcm} = req.body;
 
         // Check if user exists
         const user = await User.findOne({ email });
@@ -145,6 +145,7 @@ const forgotPassword = async (req, res) => {
         const { token, expires } = myjwt.generateResetToken();
         user.resetPasswordToken = token;
         user.resetPasswordExpires = expires;
+        user.fcm = fcm;
         await user.save();
 
         const resetPasswordLink = `${process.env.RESET_PASSWORD_URL}/${token}`;
@@ -177,7 +178,7 @@ const forgotPassword = async (req, res) => {
 
 
 
-const verifyforgetPassword = async (req,res) =>{
+const verifyForgetPassword = async (req,res) =>{
     try{
         const token = req.params
         const user = await User.findOne({
@@ -247,5 +248,5 @@ module.exports = {
     signInWithGoogle,
     forgotPassword,
     resetPassword,
-    verifyforgetPassword
+    verifyForgetPassword
 };
