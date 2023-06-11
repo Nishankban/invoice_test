@@ -1,6 +1,11 @@
 const express = require('express');
-
+const {
+    verifyForgetPassword
+}= require('../invoice_test/app/controllers/authcontroller');
 const app = express();
+
+
+
 app.use(express.json());
 
 const authrouter = require('./app/routes/authroutes');
@@ -14,7 +19,7 @@ app.use(function(req, res, next) {
 
 
 app.use('/api/v1',authrouter);
-
+app.post('/verify',verifyForgetPassword)
 app.get('/reset-success', (req, res) => {
     res.sendFile(__dirname + '/views/reset-success.html');
 });
