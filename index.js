@@ -1,16 +1,12 @@
 const app = require('./app');
-
-
 const connectDB = require('./config/database');
-
 const port = process.env.PORT || 3000;
-
 const admin = require("firebase-admin");
 const serviceAccount = require('./config/serviceAccountKey.json');
+const { initializeApp } = require('firebase-admin/app');
 
 
-// Initialize the admin app
-admin.initializeApp({
+const firebaseapp = initializeApp({
     credential: admin.credential.cert(serviceAccount),
     // databaseURL: 'https://your-project-id.firebaseio.com',
 });
@@ -36,4 +32,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`App running on port ${port}...`);
 });
-module.exports.admin = admin;
+
+module.exports ={admin}

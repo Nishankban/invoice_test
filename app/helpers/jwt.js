@@ -23,7 +23,7 @@ const generateResetToken = () => {
     const expiresIn = '24h';
 
     // Generate the JWT token with the reset token and expiration time
-    const token = jwt.sign({ resetToken }, process.env.JWT_RESET_SECRET, { expiresIn });
+    const token = jwt.sign({ resetToken }, 'my_rest_password', { expiresIn });
 
     return { token, expiresIn };
 };
