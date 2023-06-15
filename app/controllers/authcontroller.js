@@ -141,6 +141,11 @@ const forgotPassword = async (req, res) => {
             return res.status(400).json({error: 'User not found'});
         }
 
+
+        if(user.password ==null){
+            return res.status(400).json({error: 'User not signed up with mail'});
+        }
+
         // Generate reset token
         const {token, expiresIn} = myjwt.generateResetToken();
         const durationString = '24h';
@@ -156,7 +161,11 @@ const forgotPassword = async (req, res) => {
         user.fcm = fcm;
         await user.save();
 
-        const resetPasswordLink = `https://invoicetest-m7na.onrender.com/verify/${token}`;
+        // to encode the generated reset passwordtoken and make short it
+        const encodedToken = Buffer.from(token).toString('base64');
+
+
+        const resetPasswordLink = `https://invoicetest-m7na.onrender.com/api/v1/verify/${encodedToken}`;
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -187,10 +196,12 @@ const forgotPassword = async (req, res) => {
 
 const verifyForgetPassword = async (req, res) => {
     try {
-        const {token} = req.query
+
+        const { token } = req.query;
+        const decodedToken = Buffer.from(token, 'base64').toString();
 
         const user = await User.findOne({
-            resetPasswordToken: token.toString(),
+            resetPasswordToken: decodedToken.toString(),
             resetPasswordExpires: {$gt: Date.now()}
         });
 
@@ -205,7 +216,7 @@ const verifyForgetPassword = async (req, res) => {
             token: user.fcm, // Assuming the user's FCM token is stored in the 'fcm' field of the user model
             notification: {
                 title: 'Password Reset',
-                body: `${token}`,
+                body: `${decodedToken}`,
             },
 
         };
