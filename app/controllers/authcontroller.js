@@ -142,7 +142,7 @@ const forgotPassword = async (req, res) => {
         }
 
 
-        if(user.password ==null){
+        if(user.password == null){
             return res.status(400).json({error: 'User not signed up with mail'});
         }
 
