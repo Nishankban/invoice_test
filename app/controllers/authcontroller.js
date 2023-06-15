@@ -212,12 +212,19 @@ const verifyForgetPassword = async (req, res) => {
 
 
         console.log(user.fcm)
+
+
+
         const message = {
-            token: user.fcm, // Assuming the user's FCM token is stored in the 'fcm' field of the user model
-            notification: {
+            token: user.fcm,
+            data:{
+              key: 'Password Reset Token',
+              value: `${decodedToken}`
+            },// Assuming the user's FCM token is stored in the 'fcm' field of the user model
+            /*notification: {
                 title: 'Password Reset',
                 body: `${decodedToken}`,
-            },
+            },*/
 
         };
 
