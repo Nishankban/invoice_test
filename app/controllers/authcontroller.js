@@ -165,7 +165,7 @@ const forgotPassword = async (req, res) => {
         const encodedToken = Buffer.from(token).toString('base64');
 
 
-        const resetPasswordLink = `https://invoicetest-m7na.onrender.com/api/v1/verify/${encodedToken}`;
+        const resetPasswordLink = `https://invoicetest-m7na.onrender.com/api/v1/verify?token=${encodedToken}`;
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
