@@ -17,7 +17,7 @@ router.route("/forgotpassword").post(forgotPassword);
 /*  Shifted this api to main as we cant use here in the api router section */
 router.route("/verify").get(verifyForgetPassword);
 
-router.route("/resetpassword").post(resetPassword);
+router.route("/resetpassword/:token").post(resetPassword);
 
 
 

@@ -266,6 +266,10 @@ const resetPassword = async (req, res) => {
         const {token} = req.params;
         const {password} = req.body;
 
+
+
+        console.log(token);
+
         // Check if token is valid and not expired
         const user = await User.findOne({
             resetPasswordToken: token,
@@ -274,6 +278,14 @@ const resetPassword = async (req, res) => {
         if (!user) {
             return res.status(400).json({error: 'Invalid or expired reset token'});
         }
+        const isSamePassword = await user.comparePassword(password);
+
+        if (isSamePassword) {
+            return res.status(400).json({ error: 'Cannot use the previous password' });
+        }
+
+
+
 
         // Generate new password hash
         const hashpwd = await genverifypass.generatePasswordHash(password);
