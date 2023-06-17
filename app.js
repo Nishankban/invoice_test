@@ -9,6 +9,7 @@ const app = express();
 app.use(express.json());
 
 const authrouter = require('./app/routes/authroutes');
+const userprofilerouter = require('./app/routes/userprofile');
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -19,6 +20,7 @@ app.use(function(req, res, next) {
 
 
 app.use('/api/v1',authrouter);
+app.use('/api/v1',userprofilerouter);
 // app.post('/verify',verifyForgetPassword)
 app.get('/reset-success', (req, res) => {
     res.sendFile(__dirname + '/views/reset-success.html');

@@ -3,7 +3,7 @@ const express= require('express');
 const router = express.Router();
 
 const {
-    signInWithEmail,signInWithGoogle,signUpWithEmail,signUpWithGoogle,forgotPassword,verifyForgetPassword,resetPassword
+    signInWithEmail,signInWithGoogle,signUpWithEmail,signUpWithGoogle,forgotPassword,verifyForgetPassword,resetPassword,
 }= require('../controllers/authcontroller');
 
 
