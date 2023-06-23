@@ -3,7 +3,13 @@ const express = require('express');
 //     verifyForgetPassword
 // }= require('../invoice_test/app/controllers/authcontroller');
 const app = express();
+const axios = require('axios');
+const { Parser } = require('htmlparser2');
 
+const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 
 app.use(express.json());
@@ -25,34 +31,70 @@ app.use('/api/v1',userprofilerouter);
 app.get('/reset-success', (req, res) => {
     res.sendFile(__dirname + '/views/reset-success.html');
 });
-// const morgan = require('morgan');
-
-// const taskrouter = require('./routes/taskroutes');
-// const userRouter = require('./routes/userroutes');
-//
-//
-// // 1) MIDDLEWARES
-// // if (process.env.NODE_ENV === 'development') {
-// //   app.use(morgan('dev'));
-// // }
-//
-// app.use(express.json());
-// app.use(express.static(`${__dirname}/public`));
-//
-// app.use((req, res, next) => {
-//     console.log(req.body);
-//     console.log('Hello from the middleware 👋');
-//     next();
-// });
-//
-// app.use((req, res, next) => {
-//     req.requestTime = new Date().toISOString();
-//     next();
-// });
-//
-// // 3) ROUTES
-// // app.use('/api/v1/tours', taskRouter);
-// app.use('/api/v1/users', userRouter,taskrouter);
 
 
+/*app.get('/scrape', async (req, res) => {
+    const { url } = req.query;
+  
+    try {
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.setDefaultNavigationTimeout(6000000); // Set a higher timeout value
+  
+      const pagesData = [];
+      await scrapeWebsite(url, page, pagesData);
+  
+      await browser.close();
+  
+      res.json({ pagesData });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'An error occurred' });
+    }
+  });
+  
+  async function scrapeWebsite(url, page, pagesData) {
+    try {
+      await page.goto(url);
+  
+      const pageContent = await page.content();
+      const visibleText = extractVisibleText(pageContent);
+  
+      pagesData.push({ url, content: visibleText });
+  
+      const links = await page.$$eval('a', (anchors) =>
+        anchors.map((anchor) => anchor.href)
+      );
+  
+      for (const link of links) {
+        const newPage = await page.browser().newPage();
+        await scrapeWebsite(link, newPage, pagesData);
+        await newPage.close();
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+  
+  function extractVisibleText(html) {
+    let visibleText = '';
+  
+    const parser = new Parser({
+      ontext(text) {
+        visibleText += text.trim() + ' ';
+      },
+      onopentag(tagname, attributes) {
+        // You can add additional checks here to filter out specific tags if needed
+      },
+      onclosetag(tagname) {
+        // You can perform any necessary actions when a tag is closed
+      },
+    }, { decodeEntities: true });
+  
+    parser.write(html);
+    parser.end();
+  
+    return visibleText.trim();
+  }*/
+  
 module.exports = app;
