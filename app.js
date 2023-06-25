@@ -6,7 +6,6 @@ const app = express();
 const axios = require('axios');
 const { Parser } = require('htmlparser2');
 
-const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
