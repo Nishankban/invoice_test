@@ -1,17 +1,14 @@
-const Client= require('../models/ClientModels/Client');
+const Client = require('../models/ClientModels/Client');
 
 // Create or Update Client
 const createOrUpdateClient = async (req, res) => {
     try {
         const userId = req.userId; // Assuming you have the authenticated user's ID available in req.user.id
         console.log(userId);
-        const { clientId } = req.params.clientId;
+        const {clientId} = req.params.clientId;
 
         const {
-            clientPhoto,
-            company,
-            shippingAddress,
-            billingAddress
+            clientPhoto, company, shippingAddress, billingAddress
         } = req.body;
 
         let client = await Client.findById(clientId);
@@ -47,9 +44,7 @@ const createOrUpdateClient = async (req, res) => {
             res.status(200).json({message: 'Client updated successfully.'});
         } else {
             client = new Client({
-                userId,
-                clientPhoto,
-                company: {
+                userId, clientPhoto, company: {
                     name: company.name,
                     personName: company.personName,
                     mobileNumber: company.mobileNumber,
@@ -57,15 +52,13 @@ const createOrUpdateClient = async (req, res) => {
                     gstNumber: company.gstNumber,
                     email: company.email,
                     website: company.website || '',
-                },
-                shippingAddress: {
+                }, shippingAddress: {
                     addressLine: shippingAddress.addressLine,
                     city: shippingAddress.city,
                     state: shippingAddress.state,
                     country: shippingAddress.country,
                     postalCode: shippingAddress.postalCode,
-                },
-                billingAddress: {
+                }, billingAddress: {
                     addressLine: billingAddress.addressLine,
                     city: billingAddress.city,
                     state: billingAddress.state,
@@ -106,7 +99,7 @@ const getClientsByUser = async (req, res) => {
         const userId = req.userId; // Assuming you have the authenticated user's ID available in req.user.id
 
         const clients = await Client.find({userId});
-        res.status(200).json({clients});
+        res.status(200).json({success: true, clientData: clients});
     } catch (error) {
         res.status(500).json({message: 'Failed to fetch clients.', error});
     }
@@ -129,23 +122,19 @@ const deleteClient = async (req, res) => {
 };
 const getClientById = async (req, res) => {
     try {
-        const { clientId } = req.params;
+        const {clientId} = req.params;
 
         const client = await Client.findById(clientId);
         if (!client) {
-            return res.status(404).json({ message: 'Client not found.' });
+            return res.status(404).json({message: 'Client not found.'});
         }
 
-        res.status(200).json({ client });
+        res.status(200).json({success:true,clientData:client});
     } catch (error) {
-        res.status(500).json({ message: 'Failed to fetch client.', error });
+        res.status(500).json({message: 'Failed to fetch client.', error});
     }
 };
 
 module.exports = {
-    createOrUpdateClient,
-    getClientsByUser,
-    uploadClientProfile,
-    getClientById,
-    deleteClient
+    createOrUpdateClient, getClientsByUser, uploadClientProfile, getClientById, deleteClient
 };
