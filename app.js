@@ -16,6 +16,8 @@ app.use(express.json());
 
 const authrouter = require('./app/routes/authroutes');
 const userprofilerouter = require('./app/routes/userprofile');
+const locationRoutes = require('./app/routes/locationrouter');
+
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,7 +29,9 @@ app.use(function(req, res, next) {
 
 app.use('/api/v1',authrouter);
 app.use('/api/v1',userprofilerouter);
-// app.post('/verify',verifyForgetPassword)
+app.use('/api/v1',locationRoutes);
+
+
 app.get('/reset-success', (req, res) => {
     res.sendFile(__dirname + '/views/reset-success.html');
 });
