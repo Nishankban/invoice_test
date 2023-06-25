@@ -91,13 +91,13 @@ const importAllCities = async () => {
 };
 
 // Import all cities
-importAllCities()
+/*importAllCities()
     .then(() => {
         console.log('All cities imported successfully.');
     })
     .catch((err) => {
         console.error('Error importing cities:', err);
-    });
+    });*/
 
 
 
