@@ -3,18 +3,17 @@ const State = require('../models/addressModels/state');
 const City = require('../models/addressModels/city');
 
 
-
 // Retrieve all countries
 const getCountries = async (req, res) => {
     try {
-        const countries = await Country.find({}, { id: 1, name: 1, emoji: 1 });
+        const countries = await Country.find({}, {id: 1, name: 1, emoji: 1});
         res.json({
-            success:true,
-            country_data:countries
+            success: true,
+            country_data: countries
         });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success:false,error: 'Internal server error' });
+        res.status(500).json({success: false, error: 'Internal server error'});
     }
 };
 
@@ -24,11 +23,14 @@ const getStatesByCountryId = async (req, res) => {
     const countryId = req.params.countryId;
     console.log(countryId);
     try {
-        const states = await State.find({ country_id: countryId }, { id: 1, name: 1, country_id: 1,country_name:1, });
-        res.json(states);
+        const states = await State.find({country_id: countryId}, {id: 1, name: 1, country_id: 1, country_name: 1,});
+        res.json({
+            success: true,
+            states_data: states
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({error: 'Internal server error'});
     }
 };
 
@@ -36,11 +38,14 @@ const getStatesByCountryId = async (req, res) => {
 const getCitiesByStateId = async (req, res) => {
     const stateId = req.params.stateId;
     try {
-        const cities = await City.find({ state_id: stateId });
-        res.json(cities);
+        const cities = await City.find({state_id: stateId}, {id: 1, name: 1, state_id: 1, state_name: 1});
+        res.json({
+            success: true,
+            states_data: cities
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({error: 'Internal server error'});
     }
 };
 

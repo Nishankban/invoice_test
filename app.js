@@ -14,8 +14,9 @@ const { JSDOM } = jsdom;*/
 app.use(express.json());
 
 const authrouter = require('./app/routes/authroutes');
-const userprofilerouter = require('./app/routes/userprofile');
+const userprofilerouter = require('./app/routes/userprofilerouter');
 const locationRoutes = require('./app/routes/locationrouter');
+const clientRouter = require('./app/routes/clientrouter');
 
 
 app.use(function(req, res, next) {
@@ -29,6 +30,7 @@ app.use(function(req, res, next) {
 app.use('/api/v1',authrouter);
 app.use('/api/v1',userprofilerouter);
 app.use('/api/v1',locationRoutes);
+app.use('/api/v1',clientRouter);
 
 
 app.get('/reset-success', (req, res) => {
