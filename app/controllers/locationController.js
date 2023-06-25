@@ -41,7 +41,7 @@ const getCitiesByStateId = async (req, res) => {
         const cities = await City.find({state_id: stateId}, {id: 1, name: 1, state_id: 1, state_name: 1});
         res.json({
             success: true,
-            states_data: cities
+            city_data: cities
         });
     } catch (err) {
         console.error(err);
