@@ -3,12 +3,12 @@ const express = require('express');
 //     verifyForgetPassword
 // }= require('../invoice_test/app/controllers/authcontroller');
 const app = express();
-const axios = require('axios');
+/*const axios = require('axios');
 const { Parser } = require('htmlparser2');
 
 const cheerio = require('cheerio');
 const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
+const { JSDOM } = jsdom;*/
 
 
 app.use(express.json());
