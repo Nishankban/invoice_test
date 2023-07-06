@@ -11,7 +11,7 @@ const getProducts = async (req, res) => {
 };
 
 // Get a specific product by ID
-exports.getProductById = async (req, res) => {
+const getProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) {
@@ -112,6 +112,7 @@ const deleteProduct = async (req, res) => {
 module.exports = {
     createProduct,
     getProducts,
+    getProductById,
     getProductCountByUser,
     updateProduct,
     deleteProduct
