@@ -31,19 +31,21 @@ const createProduct = async (req, res) => {
         const userId = req.userId; // Assuming you have the authenticated user's ID available in req.userId
 
         // Find the maximum productNo for the user
-        const maxProductNo = await Product.findOne({ user: userId })
+       /* const maxProductNo = await Product.findOne({ user: userId })
             .sort({ productNo: -1 })
             .select('productNo')
             .lean();
 
-        const newProductNo = maxProductNo ? maxProductNo.productNo + 1 : 1;
+        const newProductNo = maxProductNo ? maxProductNo.productNo + 1 : 1;*/
 
         const newProduct = new Product({
             name,
             price,
             productCurrency,
             description,
+/*
             productNo: newProductNo,
+*/
             user: userId
         });
 
