@@ -36,7 +36,7 @@ app.use('/api/v1',userprofilerouter);
 app.use('/api/v1',locationRoutes);
 app.use('/api/v1',clientRouter);
 app.use('/api/v1/products',productRouter);
-const uploadDirectory = path.join(__dirname, ''); // Path to the directory where images are uploaded
+const uploadDirectory = path.join(__dirname, 'uploads/product'); // Path to the directory where images are uploaded
 
 // Define a route to serve the uploaded image files
 app.get('/uploads/product/:filename', (req, res) => {
