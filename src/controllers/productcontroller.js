@@ -113,7 +113,6 @@ module.exports = {
     createProduct,
     getProducts,
     getProductCountByUser,
-    getUserProfile,
     updateProduct,
     deleteProduct
 };
