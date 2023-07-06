@@ -1,7 +1,7 @@
 const Product = require('../models/ProductModels/product');
 
 // Get all products
-exports.getProducts = async (req, res) => {
+const getProducts = async (req, res) => {
     try {
         const products = await Product.find({});
         res.json(products);
@@ -25,7 +25,7 @@ exports.getProductById = async (req, res) => {
 };
 
 // Create a new product
-exports.createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
     try {
         const { name, price, productCurrency, description } = req.body;
         const userId = req.userId; // Assuming you have the authenticated user's ID available in req.userId
@@ -54,7 +54,7 @@ exports.createProduct = async (req, res) => {
     }
 };
 
-exports.getProductCountByUser = async (req, res) => {
+const getProductCountByUser = async (req, res) => {
     try {
         const userId = req.params.userId;
 
@@ -74,7 +74,7 @@ exports.getProductCountByUser = async (req, res) => {
     }
 };
 // Update a product
-exports.updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
     try {
         const { name, price, productCurrency, description } = req.body;
         const images = req.files.map((file) => file.path);
@@ -96,7 +96,7 @@ exports.updateProduct = async (req, res) => {
 };
 
 // Delete a product
-exports.deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndDelete(req.params.id);
 
@@ -108,4 +108,12 @@ exports.deleteProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
     }
+};
+module.exports = {
+    createProduct,
+    getProducts,
+    getProductCountByUser,
+    getUserProfile,
+    updateProduct,
+    deleteProduct
 };

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const generateStorage = require('../helpers/multerhelper');
 
-const productController = require('../controllers/productController');
+const productController = require('../controllers/productcontroller');
 const {authenticateToken} = require("../helpers/jwt");
 const upload = generateStorage('product');
 
