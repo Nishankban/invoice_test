@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 // const {
 //     verifyForgetPassword
@@ -35,7 +36,7 @@ app.use('/api/v1',userprofilerouter);
 app.use('/api/v1',locationRoutes);
 app.use('/api/v1',clientRouter);
 app.use('/api/v1/products',productRouter);
-const uploadDirectory = path.join(__dirname, 'uploads'); // Path to the directory where images are uploaded
+const uploadDirectory = path.join(__dirname, ''); // Path to the directory where images are uploaded
 
 // Define a route to serve the uploaded image files
 app.get('/uploads/product/:filename', (req, res) => {
@@ -50,6 +51,50 @@ app.get('/uploads/product/:filename', (req, res) => {
     });
 });
 
+app.get('/api/folder-structure', (req, res) => {
+
+
+    getFolderStructure(uploadDirectory)
+        .then((folderStructure) => {
+            res.json(folderStructure);
+        })
+        .catch((error) => {
+            console.error('Error retrieving folder structure:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        });
+});
+
+// Function to recursively retrieve the folder structure
+function getFolderStructure(directory) {
+    return new Promise((resolve, reject) => {
+        fs.readdir(directory, { withFileTypes: true }, (error, files) => {
+            if (error) {
+                reject(error);
+            } else {
+                const folderStructure = {
+                    name: path.basename(directory),
+                    type: 'folder',
+                    children: [],
+                };
+
+                files.forEach((file) => {
+                    const filePath = path.join(directory, file.name);
+
+                    if (file.isDirectory()) {
+                        folderStructure.children.push(getFolderStructure(filePath));
+                    } else {
+                        folderStructure.children.push({
+                            name: file.name,
+                            type: 'file',
+                        });
+                    }
+                });
+
+                resolve(folderStructure);
+            }
+        });
+    });
+}
 
 app.get('/reset-success', (req, res) => {
     res.sendFile(__dirname + '/views/reset-success.html');
