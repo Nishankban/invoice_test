@@ -3,12 +3,8 @@ const genverifypass = require('../helpers/password');
 const myjwt = require('../helpers/jwt');
 const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
-const {admin, firebaseapp} = require('../../index');
 const nodemailer = require('nodemailer');
-const pushnotification = require('../helpers/pushNotification');
-const {sendPushNotification} = require("../helpers/pushNotification");
 const {getMessaging} = require("firebase-admin/messaging");
-const {response} = require("express");
 // Sign up with email
 const signUpWithEmail = async (req, res) => {
     try {

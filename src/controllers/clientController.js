@@ -112,7 +112,7 @@ const deleteClient = async (req, res) => {
 
         const client = await Client.findByIdAndDelete(clientId);
         if (!client) {
-            return res.status(404).json({message: 'Client not found.'});
+            return res.status(400).json({message: 'Client not found.'});
         }
 
         res.status(200).json({message: 'Client deleted successfully.'});
@@ -126,7 +126,7 @@ const getClientById = async (req, res) => {
 
         const client = await Client.findById(clientId);
         if (!client) {
-            return res.status(404).json({message: 'Client not found.'});
+            return res.status(400).json({message: 'Client not found.'});
         }
 
         res.status(200).json({success:true,clientData:client});

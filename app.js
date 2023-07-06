@@ -1,7 +1,7 @@
 const express = require('express');
 // const {
 //     verifyForgetPassword
-// }= require('../invoice_test/app/controllers/authcontroller');
+// }= require('../invoice_test/src/controllers/authcontroller');
 const app = express();
 /*const axios = require('axios');
 const { Parser } = require('htmlparser2');
@@ -13,10 +13,11 @@ const { JSDOM } = jsdom;*/
 
 app.use(express.json());
 
-const authrouter = require('./app/routes/authroutes');
-const userprofilerouter = require('./app/routes/userprofilerouter');
-const locationRoutes = require('./app/routes/locationrouter');
-const clientRouter = require('./app/routes/clientrouter');
+const authrouter = require('./src/routes/authroutes');
+const userprofilerouter = require('./src/routes/userprofilerouter');
+const locationRoutes = require('./src/routes/locationrouter');
+const clientRouter = require('./src/routes/clientrouter');
+const productRouter = require('./src/routes/productroutes');
 
 
 app.use(function(req, res, next) {
@@ -31,6 +32,7 @@ app.use('/api/v1',authrouter);
 app.use('/api/v1',userprofilerouter);
 app.use('/api/v1',locationRoutes);
 app.use('/api/v1',clientRouter);
+app.use('/api/v1/products',productRouter);
 
 
 app.get('/reset-success', (req, res) => {
@@ -38,7 +40,7 @@ app.get('/reset-success', (req, res) => {
 });
 
 
-/*app.get('/scrape', async (req, res) => {
+/*src.get('/scrape', async (req, res) => {
     const { url } = req.query;
   
     try {

@@ -23,7 +23,7 @@ const getStatesByCountryId = async (req, res) => {
     const countryId = req.params.countryId;
     console.log(countryId);
     try {
-        const states = await State.find({country_id: countryId}, {id: 1, name: 1, country_id: 1, country_name: 1,});
+        const states = await State.find({country_id: countryId}, {id: 1, name: 1, country_id: 1, country_name: 1,currency:1,currency_name:1,currency_symbol:1});
         res.json({
             success: true,
             states_data: states

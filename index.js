@@ -1,15 +1,15 @@
 const app = require('./app');
-const connectDB = require('./config/database');
+const connectDB = require('./src/config/database');
 const port = process.env.PORT || 3000;
 const admin = require("firebase-admin");
-const serviceAccount = require('./config/serviceAccountKey.json');
+const serviceAccount = require('./src/config/serviceAccountKey.json');
 const { initializeApp } = require('firebase-admin/app');
 const csv = require('csv-parser');
 const fs = require('fs');
 const mongoose = require('mongoose');
-const Country = require('./app/models/addressModels/country');
-const State = require('./app/models/addressModels/state');
-const City = require('./app/models/addressModels/city');
+const Country = require('./src/models/addressModels/country');
+const State = require('./src/models/addressModels/state');
+const City = require('./src/models/addressModels/city');
 
 
 /*const firebaseapp = initializeApp({
