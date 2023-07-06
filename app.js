@@ -33,6 +33,20 @@ app.use('/api/v1',userprofilerouter);
 app.use('/api/v1',locationRoutes);
 app.use('/api/v1',clientRouter);
 app.use('/api/v1/products',productRouter);
+const uploadDirectory = path.join(__dirname, 'uploads'); // Path to the directory where images are uploaded
+
+// Define a route to serve the uploaded image files
+app.get('/uploads/product/:filename', (req, res) => {
+    const fileName = req.params.filename;
+    const filePath = path.join(uploadDirectory, fileName);
+
+    res.sendFile(filePath, (error) => {
+        if (error) {
+            console.error('Error sending file:', error);
+            res.status(404).send('File not found');
+        }
+    });
+});
 
 
 app.get('/reset-success', (req, res) => {
