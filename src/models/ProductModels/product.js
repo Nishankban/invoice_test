@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema(
             required: true
         },
         images: [String],
-        user: {
+        userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }
