@@ -29,6 +29,7 @@ const createProduct = async (req, res) => {
     try {
         const { name, price, productCurrency, description } = req.body;
         const userId = req.userId; // Assuming you have the authenticated user's ID available in req.userId
+        const images = req.files.map((file) => file.path);
 
         // Find the maximum productNo for the user
        /* const maxProductNo = await Product.findOne({ user: userId })
@@ -43,6 +44,7 @@ const createProduct = async (req, res) => {
             price,
             productCurrency,
             description,
+            images,
 /*
             productNo: newProductNo,
 */
