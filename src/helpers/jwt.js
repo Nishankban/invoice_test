@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
 // Generate JWT token
-const generateToken = (payload, secretKey, expiresIn = '48h') => {
+const generateToken = (payload, secretKey, expiresIn = '240h') => {
     const token = jwt.sign(payload, secretKey, { expiresIn });
     return token;
 };
